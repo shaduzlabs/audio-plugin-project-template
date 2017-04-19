@@ -35,7 +35,7 @@ set_directory_properties( PROPERTIES
 
 # Configuration ---------------------------------------------------------------------------------- #
 
-setupCI( 1 0 1 ) # version
+setupCI( 1 0 2 ) # version
 string( TIMESTAMP PROJECT_BUILD_DATE "%Y-%m-%d" )
 
 set( JUCE_CONFIG_PLUGIN_NAME "gain" )
@@ -57,6 +57,14 @@ set( JUCE_CONFIG_MAX_IN_CHANNELS 2 )
 set( JUCE_CONFIG_MAX_OUT_CHANNELS 2 )
 set( JUCE_CONFIG_PREFERRED_CHANNELS_CFG "{1,1,},{2,2}")
 
+if( JUCE_CONFIG_IS_SYNTH EQUAL 1)
+  set( JUCE_CONFIG_PLUGIN_VST_TYPE "kPlugCategSynth" )
+  set( JUCE_CONFIG_PLUGIN_AU_TYPE "aumu" ) # Synth: "aumu", FX: "aufx"
+else()
+  set( JUCE_CONFIG_PLUGIN_VST_TYPE "kPlugCategEffect" )
+  set( JUCE_CONFIG_PLUGIN_AU_TYPE "aufx" ) # Synth: "aumu", FX: "aufx"
+endif()
+
 configure_file (
   "${PROJECT_ROOT_DIR}/support/JuceHeader.h.in"
   "${PROJECT_BINARY_DIR}/JuceHeader.h"
@@ -67,12 +75,12 @@ configure_file (
   "${PROJECT_BINARY_DIR}/AppConfig.h"
 )
 
-message( " ")
-message( " ")
-message( "${BoldYellow}${JUCE_CONFIG_PLUGIN_NAME} - ${JUCE_CONFIG_PLUGIN_DESC}${ColorReset}")
+MESSAGE( " ")
+MESSAGE( " ")
+MESSAGE( "${BoldYellow}${JUCE_CONFIG_PLUGIN_NAME} - ${JUCE_CONFIG_PLUGIN_DESC}${ColorReset}")
 message( "[${PROJECT_BUILD_DATE}] v. ${PROJECT_VERSION_STRING} / ${PROJECT_BUILD_DESCRIPTION} ")
-message( " ")
-message( " ")
+MESSAGE( " ")
+MESSAGE( " ")
 
 # Sources ---------------------------------------------------------------------------------------- #
 

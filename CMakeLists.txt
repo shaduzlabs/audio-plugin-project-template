@@ -111,4 +111,4 @@ set( ALL_SOURCES ${UI_SOURCES} ${PLUGIN_SOURCES} )
 
 # Targets ---------------------------------------------------------------------------------------- #
 
-addJUCEPlugins( gain "${ALL_SOURCES}" )
+addJUCEPlugins( ${JUCE_CONFIG_PLUGIN_NAME} "${ALL_SOURCES}" )

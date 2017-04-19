@@ -35,7 +35,7 @@ set_directory_properties( PROPERTIES
 
 # Configuration ---------------------------------------------------------------------------------- #
 
-setupCI( 1 0 0 ) # version
+setupCI( 1 0 1 ) # version
 string( TIMESTAMP PROJECT_BUILD_DATE "%Y-%m-%d" )
 
 set( JUCE_CONFIG_PLUGIN_NAME "gain" )

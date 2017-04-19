@@ -7,7 +7,7 @@
 
 cmake_minimum_required (VERSION 3.2.0)
 
-project (plugin-project-template)
+project (audio-plugin-project-template)
 
 set ( CMAKE_CXX_STANDARD 11 )
 
@@ -35,7 +35,7 @@ set_directory_properties( PROPERTIES
 
 # Configuration ---------------------------------------------------------------------------------- #
 
-setupCI( 1 0 0 0x010000 ) # version
+setupCI( 1 0 0 ) # version
 string( TIMESTAMP PROJECT_BUILD_DATE "%Y-%m-%d" )
 
 set( JUCE_CONFIG_PLUGIN_NAME "gain" )

@@ -5,12 +5,12 @@ configuration:
 platform:
 - Win32
 - x64
-clone_folder: c:\SLBuild\throb
+clone_folder: c:\SLBuild\audio-plugin-project-template
 init:
 - cmd: >-
     cd c:\SLBuild\
 
-    cd throb
+    cd audio-plugin-project-template
 
 build_script:
 - cmd: >-
@@ -20,7 +20,7 @@ build_script:
 
     c:
 
-    cd c:\SLBuild\throb
+    cd c:\SLBuild\audio-plugin-project-template
 
     git submodule update --init --recursive
 
@@ -48,7 +48,7 @@ build_script:
 
 after_build:
 - cmd: >-
-    cd c:\SLBuild\throb\artifacts-%CONFIGURATION%
+    cd c:\SLBuild\audio-plugin-project-template\artifacts-%CONFIGURATION%
 
     if %PLATFORM% == x64 (echo Preparing to deploy win-64.zip) else (echo Preparing to deploy win-32.zip)
 

@@ -1,0 +1,6 @@
+[submodule "modules/vst3sdk"]
+	path = modules/vst3sdk
+	url = https://github.com/steinbergmedia/vst3sdk.git
+[submodule "modules/JUCE"]
+	path = modules/JUCE
+	url = https://github.com/julianstorer/JUCE.git

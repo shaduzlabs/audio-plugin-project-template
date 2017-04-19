@@ -1,0 +1,10 @@
+/*
+        ##########    Copyright (C) 2017 Vincenzo Pacella
+        ##      ##    Distributed under MIT license, see file LICENSE
+        ##      ##    or <http://opensource.org/licenses/MIT>
+        ##      ##
+##########      ############################################################# shaduzlabs.com #####*/
+
+#define PROJECT_VERSION_MAJOR @versionMajor_@
+#define PROJECT_VERSION_MINOR @versionMinor_@
+#define PROJECT_VERSION_MICRO @versionMicro_@

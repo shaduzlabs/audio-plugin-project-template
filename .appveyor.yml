@@ -1,0 +1,76 @@
+version: configuring.{build}
+configuration:
+- Debug
+- Release
+platform:
+- Win32
+- x64
+clone_folder: c:\SLBuild\throb
+init:
+- cmd: >-
+    cd c:\SLBuild\
+
+    cd throb
+
+build_script:
+- cmd: >-
+    echo Running cmake...
+
+    echo Building %CONFIGURATION% - %PLATFORM%
+
+    c:
+
+    cd c:\SLBuild\throb
+
+    git submodule update --init --recursive
+
+    mkdir build-%PLATFORM%
+
+    pushd build-%PLATFORM%
+
+    if %PLATFORM% == x64 (set GENERATOR="Visual Studio 14 2015 Win64") else (set GENERATOR="Visual Studio 14 2015")
+
+    cmake -G %GENERATOR% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+
+    cd ..
+
+    cmake --build build-%PLATFORM% --config %CONFIGURATION%
+
+    mkdir artifacts-%CONFIGURATION%
+
+    cd build-%PLATFORM%\%CONFIGURATION%\
+
+    7z a -tzip win.zip -r *.dll
+
+    move /y *.zip ..\..\artifacts-%CONFIGURATION%
+
+    cd ..\..\
+
+after_build:
+- cmd: >-
+    cd c:\SLBuild\throb\artifacts-%CONFIGURATION%
+
+    if %PLATFORM% == x64 (echo Preparing to deploy win-64.zip) else (echo Preparing to deploy win-32.zip)
+
+    if %PLATFORM% == x64 (ren win.zip win-64.zip) else (ren win.zip win-32.zip)
+
+    cd ..
+
+artifacts:
+- path: artifacts-Release/win-32.zip
+  name: binary (32bit)
+- path: artifacts-Release/win-64.zip
+  name: binary (64bit)
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: YdSaqN8QORm4y2pBT0D40ltSZ+2iL9A0bTh3s3JbqgH5scJKqPhpdrUDFdp6TNkW
+  artifact: /win-.*\.zip/
+  force_update: true
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true
+    branch: master
+    CONFIGURATION: Release

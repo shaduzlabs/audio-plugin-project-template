@@ -54,16 +54,14 @@ after_success:
     mv ${PROJECT_DEPLOY_TARGET}.zip deploy
     cd ..
   fi
-
 before_deploy:
-  - export FILE_TO_UPLOAD=$(ls build/deploy/*.zip)
-
+- export FILE_TO_UPLOAD=$(ls build/deploy/*.zip)
 deploy:
   provider: releases
   api_key:
-    secure: ZVGWx04RnzEZmwnRx0CrIzROvaUwWLXIvBEjAXz2LG95A14cDv+sExIKiWRUu9qHQHGyhrye+4PeB1Dbw1gP7/uh4elXrx+IrQHoI4LqWnPZ1urNUlE+oWg3fRPM9PIvw6Y1kkhpWCqeF3CrT26uhpc4rQ9MEhAsyg1VR+CHXowbRypNuKv53BB1MiHWxnLEoh6vOgVsGn+aSA58MEGGmbwG2bazrgbUVCfQphGRpQtP6t7pwSxnNU+K7zseTUo7a9xxF/DwYZGh02zIazfxIgonqbIjv7Qe+ChAv3QaKjR9DArDNZHlyEGlYJecu8Fm4BjeU5RviqJ3QF9PusM1RJNq7OHnj3OPaDNt7LvlKQPDrH8AIrdtH7T217gVCmYqk4yUy86+qFnIAmAj46ZC5QgM6UQ/OsBqpfseRXdFOepQbpMbXopAOm+CrTvztDJ/WzNyqWGbfTr0dnmM2GBU+cVjioQ6+/tlOTIQir/HmUPRAgXcroEBTVstWPgtZ3jfFXAJ72Am55CmHDrujq6o+Ce9Az2EBfwpJUM19SykB5h4+XtLPu4i8dBmkiTkS0UEkllyUnlAQv0Q/NvKalnovyQrnM5rZhf4eJ6A6/aMjSIxWUZ3C+U3sXsw1DPJHFVGprtfLchIj+yBPyt8bjNoGPEmf9PqvZYhT3P8GGpQq/o=
+    secure: LH4bWTZxXA0HFJoHgjagTVdG6zu6+Xtwaui1kVljgcbVWZUQSVJlFtPvTTT9h6Ae0lq+qlpb33leOOY+qssWPTs5nn2Kmz/RcK42wNCLnyiMf9QSg5zQXce1Yhuqr0CPppGKfqKE/Pl3wI+J4o5QrMWkWKAsQaNlotVQE5wo4vN2Z4mYgMMrID6Xwz2TUM6LN7fBgFre7fjlImvB1F7sXc8CM2tu0rdQeqPhuPj+rlR98RZu4pWL50MYAwamhqvFOmaNXC+QAR+VSzSdtH5k6Ez9lTkN8gFjNVm4dLqomO2O7Lb1dL2qiAQXNhsr94FWrHWMBcXxrYBTvWzYWYaGcysNDwRla3WTg8IB//uzl37j/p7o8+YmPH6Frq7R3skLx3PQrYC5VpmG7qpSDNPFn8b9PMWekSivjY+uj8EmOso9X42Ev6M1iIakgkYUAwL7L9KpG/avnR1zrjH2dZKT8A4PPsaYvhffaaD/bjP6UGekSHQxTeiamIcsCBRfp6r76eQnVYdwVTxFlHKb2BjfPB6AZvVpkAKsVBu+igScJwMsBEEcWVGUZ+mxKEMM4mJpwhrSE5qZL688EPLlooJy64vnkSLuE2sT2avW02OVfBgYXVnOmSTj3HF1Cexig3CwnemdrqKAZ0+lxUjySysfxkk4WMi9uQG3i31rct1/q/Y=
   file_glob: true
-  file: "${FILE_TO_UPLOAD}"
+  file: ${FILE_TO_UPLOAD}
   skip_cleanup: true
   overwrite: true
   on:

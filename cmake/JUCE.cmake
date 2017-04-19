@@ -16,6 +16,14 @@ function( addJUCE target_ )
     find_package( OpenGL REQUIRED )
   endif()
 
+  if( JUCE_CONFIG_IS_SYNTH EQUAL 1 )
+    set( JUCE_CONFIG_PLUGIN_VST_TYPE "kPlugCategSynth" PARENT_SCOPE )
+    set( JUCE_CONFIG_PLUGIN_AU_TYPE "aumu" PARENT_SCOPE ) # Synth: "aumu", FX: "aufx"
+  else()
+    set( JUCE_CONFIG_PLUGIN_VST_TYPE "kPlugCategEffect" PARENT_SCOPE )
+    set( JUCE_CONFIG_PLUGIN_AU_TYPE "aufx" PARENT_SCOPE ) # Synth: "aumu", FX: "aufx"
+  endif()
+
   target_compile_definitions( ${CURRENT_TARGET} PRIVATE
     JUCE_SHARED_CODE=1
     JucePlugin_Build_VST=0

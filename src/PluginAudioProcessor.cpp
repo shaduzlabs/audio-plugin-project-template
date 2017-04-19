@@ -111,8 +111,10 @@ void PluginAudioProcessor::processBlock(AudioSampleBuffer& buffer_, MidiBuffer& 
 {
   for (int i = 0; i < getBlockSize(); ++i)
   {
-    buffer_.getWritePointer(0)[i] = buffer_.getReadPointer(0)[i] * m_gain;
-    buffer_.getWritePointer(1)[i] = buffer_.getReadPointer(1)[i] * m_gain;
+    for (int c = 0; i < buffer_.getNumChannels(); ++c)
+    {
+      buffer_.getWritePointer(c)[i] = buffer_.getReadPointer(c)[i] * m_gain;
+    }
   }
 }
 

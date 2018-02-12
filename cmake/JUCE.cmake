@@ -8,11 +8,20 @@
 set(SUBMODULES_DIR ${CMAKE_SOURCE_DIR}/modules)
 set(JUCE_LIBRARY_CODE_DIR ${CMAKE_SOURCE_DIR}/support/JuceLibraryCode/)
 
+if(UNIX AND NOT APPLE)
+  set(LINUX TRUE)
+endif()
+
 # --------------------------------------------------------------------------------------------------
 
 function( addJUCE target_ )
 
   if(APPLE)
+    find_package( OpenGL REQUIRED )
+  elseif(LINUX)
+    find_package( ALSA REQUIRED )
+    find_package( Freetype REQUIRED )
+    find_package( X11 REQUIRED )
     find_package( OpenGL REQUIRED )
   endif()
 
@@ -123,7 +132,21 @@ function( addJUCE target_ )
       ws2_32.lib
     )
 
+  elseif(LINUX)
+
+    target_include_directories(${CURRENT_TARGET} PRIVATE
+      ${FREETYPE_INCLUDE_DIRS}
+    )
+
+    target_link_libraries(${CURRENT_TARGET} PRIVATE
+      ${ALSA_LIBRARIES}
+      ${FREETYPE_LIBRARIES}
+      ${OPENGL_LIBRARIES}
+      ${X11_LIBRARIES}
+    )
+
   endif()
+
 
 endfunction(addJUCE)
 
@@ -211,7 +234,7 @@ function( addJUCE_VST3 name_ sources_ )
   endif()
 
   set( PLUGIN_OUTPUT_NAME ${name_} )
-  if( WIN32 )
+  if( WIN32 OR LINUX )
     set( PLUGIN_OUTPUT_NAME ${name_}-vst3 )
   endif()
 

@@ -47,8 +47,9 @@ script:
 - cd ${TRAVIS_BUILD_DIR}
 - mkdir build
 - cd build
-- CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE -G
-  Xcode .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE -DCMAKE_BUILD_TYPE=${BUILD_TYPE}; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE -G
+  Xcode .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"; fi
 - cd ..
 - cmake --build build --config $BUILD_TYPE
 after_success:

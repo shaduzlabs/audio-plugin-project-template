@@ -82,7 +82,8 @@ void GainGUI::sliderValueChanged(Slider* sliderThatWasMoved)
     auto gainValue = m_audioProcessor.gain();
     std::stringstream ss;
     ss << std::setprecision(3) << gainValue;
-    m_audioProcessor.setParameterNotifyingHost(0, sliderThatWasMoved->getValue());
+    m_audioProcessor.setParameterNotifyingHost(
+      0, static_cast<float>(sliderThatWasMoved->getValue()));
     m_lblGain->setText(ss.str(), NotificationType::dontSendNotification);
   }
 }

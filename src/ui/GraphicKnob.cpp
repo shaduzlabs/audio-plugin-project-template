@@ -27,7 +27,7 @@ GraphicKnob::GraphicKnob(const Image& image_, unsigned nFrames_, bool horizontal
 
 void GraphicKnob::paint(Graphics& g)
 {
-  int value = (getValue() - getMinimum()) / (getMaximum() - getMinimum()) * (m_nFrames - 1);
+  const auto value = (getValue() - getMinimum()) / (getMaximum() - getMinimum()) * (m_nFrames - 1);
   if (m_imageBackgroundHover != nullptr && isEnabled() && isMouseOverOrDragging())
   {
     g.drawImage(
@@ -41,7 +41,7 @@ void GraphicKnob::paint(Graphics& g)
       0,
       getWidth(),
       getHeight(),
-      value * m_frameWidth,
+      static_cast<int>(value) * m_frameWidth,
       0,
       m_frameWidth,
       m_frameHeight);

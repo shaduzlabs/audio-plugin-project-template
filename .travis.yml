@@ -4,31 +4,31 @@ sudo: false
 matrix:
   include:
   - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - george-edison55-precise-backports
-          packages:
-            - g++-6
-            - cmake-data
-            - cmake
-      env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-        - BUILD_TYPE='Debug'
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - george-edison55-precise-backports
+        packages:
+          - g++-6
+          - cmake-data
+          - cmake
+    env:
+      - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+      - BUILD_TYPE='Debug'
   - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - george-edison55-precise-backports
-          packages:
-            - g++-6
-            - cmake-data
-            - cmake
-      env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-        - BUILD_TYPE='Release'
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - george-edison55-precise-backports
+        packages:
+          - g++-6
+          - cmake-data
+          - cmake
+    env:
+      - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+      - BUILD_TYPE='Release'
   - os: osx
     compiler: clang
     env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'

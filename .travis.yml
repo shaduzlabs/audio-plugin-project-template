@@ -31,10 +31,10 @@ matrix:
       - BUILD_TYPE='Release'
   - os: osx
     compiler: clang
-    env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
+    env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'
   - os: osx
     compiler: clang
-    env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'
+    env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Release'
       PROJECT_DEPLOY_TARGET="osx"
 install:
 - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
@@ -48,9 +48,7 @@ script:
 - cd ${TRAVIS_BUILD_DIR}
 - mkdir build
 - cd build
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE -DCMAKE_BUILD_TYPE=${BUILD_TYPE}; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE -G
-  Xcode .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"; fi
+- CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE $GENERATOR .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"
 - cd ..
 - cmake --build build --config $BUILD_TYPE
 after_success:

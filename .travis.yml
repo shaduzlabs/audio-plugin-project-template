@@ -2,6 +2,32 @@ language: cpp
 sudo: false
 matrix:
   include:
+  - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+          packages:
+            - g++-6
+            - cmake-data
+            - cmake
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - BUILD_TYPE='Debug'
+  - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+          packages:
+            - g++-6
+            - cmake-data
+            - cmake
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - BUILD_TYPE='Release'
   - os: osx
     osx_image: xcode8
     compiler: clang
@@ -14,19 +40,6 @@ matrix:
 install:
 - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
 - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-- |
-  if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
-    mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    echo "The compiler is: ${CXX_COMPILER}"
-    echo "The CMake path is: ${DEPS_DIR}/cmake/bin"
-    CMAKE_EXECUTABLE=${DEPS_DIR}/cmake/bin/cmake
-  else
-    brew update
-    brew install cmake
-    CMAKE_EXECUTABLE=cmake
-  fi
 before_script:
 - export CXX=${CXX_COMPILER}
 - export CC=${C_COMPILER}

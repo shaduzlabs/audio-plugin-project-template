@@ -30,9 +30,8 @@ This project provides configuration files and some cmake utilities to speed-up t
 ## Building on OS X ##
 - Make sure cmake, git and Xcode are installed (if not, the first two can be installed via [brew][dbaaa0fa], while Xcode can be downloaded from the App Store)
 - From the terminal, run:
-  - `git clone https://github.com/shaduzlabs/audio-plugin-project-template.git`
+  - `git clone https://github.com/shaduzlabs/audio-plugin-project-template.git` --recursive
   - `cd audio-plugin-project-template`
-  - `git submodule update --init --recursive`
   - `mkdir build`
   - `cd build`
   - `cmake -DCMAKE_OSX_ARCHITECTURES="i386;x86_64" -G Xcode ..`
@@ -45,9 +44,8 @@ This project provides configuration files and some cmake utilities to speed-up t
 ## Building on Windows ##
 - Make sure cmake, git and Visual Studio 2015 are installed
 - From the command prompt, run:
-  - `git clone https://github.com/shaduzlabs/audio-plugin-project-template.git`
+  - `git clone https://github.com/shaduzlabs/audio-plugin-project-template.git` --recursive
   - `cd audio-plugin-project-template`
-  - `git submodule update --init --recursive`
   - `mkdir build`
   - `cd build`
   - `cmake -G "Visual Studio 14 2015 Win64" ..` to build the 64 bit version or `cmake -G "Visual Studio 14 2015" ..` to build the 32 bit version

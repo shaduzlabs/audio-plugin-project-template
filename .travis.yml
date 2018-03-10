@@ -29,11 +29,9 @@ matrix:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
         - BUILD_TYPE='Release'
   - os: osx
-    osx_image: xcode8
     compiler: clang
     env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
   - os: osx
-    osx_image: xcode8
     compiler: clang
     env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'
       PROJECT_DEPLOY_TARGET="osx"

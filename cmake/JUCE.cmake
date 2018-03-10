@@ -82,7 +82,7 @@ function( addJUCE target_ )
 
   target_include_directories( ${CURRENT_TARGET} PUBLIC
     ${JUCE_LIBRARY_CODE_DIR}
-    ${CMAKE_SOURCE_DIR}/modules/JUCE/modules
+    ${CMAKE_SOURCE_DIR}/modules/JUCE5/modules
   )
 
   set_target_properties(${CURRENT_TARGET} PROPERTIES
@@ -100,10 +100,13 @@ function( addJUCE target_ )
     target_link_libraries( ${CURRENT_TARGET} PUBLIC
       "-framework AudioUnit"
       "-framework AudioToolbox"
+      "-framework AVFoundation"
+      "-framework AVKit"
       "-framework Carbon"
       "-framework Cocoa"
-      "-framework CoreFoundation"
       "-framework CoreAudio"
+      "-framework CoreFoundation"
+      "-framework CoreMedia"
       "-framework CoreMidi"
       "-framework QuartzCore"
       "-framework IOKit"

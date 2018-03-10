@@ -14,7 +14,7 @@
 
 //--------------------------------------------------------------------------------------------------
 
-class GainGUI final : public Component, public SliderListener
+class GainGUI final : public Component, public Slider::Listener
 {
 public:
   GainGUI(PluginAudioProcessor& ap_);

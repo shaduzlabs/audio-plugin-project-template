@@ -140,6 +140,7 @@ function( addJUCE target_ )
 
     target_include_directories(${CURRENT_TARGET} PRIVATE
       ${FREETYPE_INCLUDE_DIRS}
+      ${GTK_INCLUDE_DIRS}
     )
 
     target_link_libraries(${CURRENT_TARGET} PRIVATE

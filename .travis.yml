@@ -10,7 +10,7 @@ matrix:
           - ubuntu-toolchain-r-test
         packages:
           - g++-6
-    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'
+    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
   - os: linux
     addons:
       apt:
@@ -18,7 +18,7 @@ matrix:
           - ubuntu-toolchain-r-test
         packages:
           - g++-6
-    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Release'
+    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'
   - os: osx
     compiler: clang
     env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'

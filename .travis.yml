@@ -19,6 +19,7 @@ matrix:
           - libxcomposite-dev
           - libfreetype6-dev
           - libcurl4-gnutls-dev
+          - libxcursor-dev
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
   - os: linux
     addons:
@@ -34,6 +35,7 @@ matrix:
           - libxcomposite-dev
           - libfreetype6-dev
           - libcurl4-gnutls-dev
+          - libxcursor-dev
         packages:
           - g++-6
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'

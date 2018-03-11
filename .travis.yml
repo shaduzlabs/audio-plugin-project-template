@@ -8,22 +8,16 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - george-edison55-precise-backports
         packages:
           - g++-6
-          - cmake-data
-          - cmake
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'
   - os: linux
     addons:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - george-edison55-precise-backports
         packages:
           - g++-6
-          - cmake-data
-          - cmake
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Release'
   - os: osx
     compiler: clang
@@ -44,7 +38,7 @@ script:
 - cd ${TRAVIS_BUILD_DIR}
 - mkdir build
 - cd build
-- CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} $CMAKE_EXECUTABLE $GENERATOR .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"
+- CXX=${CXX_COMPILER} CC=${C_COMPILER} FC=${Fortran_COMPILER} cmake $GENERATOR .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"
 - cd ..
 - cmake --build build --config $BUILD_TYPE
 after_success:

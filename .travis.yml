@@ -10,12 +10,14 @@ matrix:
           - ubuntu-toolchain-r-test
         packages:
           - g++-6
+          - libasound2-dev
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
   - os: linux
     addons:
       apt:
         sources:
           - ubuntu-toolchain-r-test
+          - libasound2-dev
         packages:
           - g++-6
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'

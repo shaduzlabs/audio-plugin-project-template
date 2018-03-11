@@ -8,6 +8,7 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
+          - sourceline: 'ppa:webkit-team/ppa'
         packages:
           - g++-6
           - libasound2-dev
@@ -21,13 +22,14 @@ matrix:
           - libcurl4-gnutls-dev
           - libxcursor-dev
           - libgtk-3-dev
-          - libwebkit2gtk-dev
+          - libwebkit2gtk-4.0-dev
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Debug'
   - os: linux
     addons:
       apt:
         sources:
           - ubuntu-toolchain-r-test
+          - sourceline: 'ppa:webkit-team/ppa'
         packages:
           - g++-6
           - libasound2-dev
@@ -41,7 +43,7 @@ matrix:
           - libcurl4-gnutls-dev
           - libxcursor-dev
           - libgtk-3-dev
-          - libwebkit2gtk-dev
+          - libwebkit2gtk-4.0-dev
     env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' BUILD_TYPE='Release'
   - os: osx
     compiler: clang

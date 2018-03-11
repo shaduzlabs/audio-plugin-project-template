@@ -13,9 +13,7 @@ matrix:
           - g++-6
           - cmake-data
           - cmake
-    env:
-      - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-      - BUILD_TYPE='Debug'
+    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'
   - os: linux
     addons:
       apt:
@@ -26,9 +24,7 @@ matrix:
           - g++-6
           - cmake-data
           - cmake
-    env:
-      - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-      - BUILD_TYPE='Release'
+    env: CXX_COMPILER='g++-6' C_COMPILER='gcc-6' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Release'
   - os: osx
     compiler: clang
     env: CXX_COMPILER='clang++' C_COMPILER='clang' Fortran_COMPILER='gfortran' GENERATOR='-G Xcode' BUILD_TYPE='Debug'

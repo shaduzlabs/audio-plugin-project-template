@@ -23,7 +23,7 @@ function( addJUCE target_ )
     find_package( Freetype REQUIRED )
     find_package( X11 REQUIRED )
     find_package( OpenGL REQUIRED )
-    find_package( GTK3 REQUIRED )
+    find_package( GTK REQUIRED )
   endif()
 
   target_compile_definitions( ${CURRENT_TARGET} PRIVATE
@@ -147,7 +147,7 @@ function( addJUCE target_ )
       ${FREETYPE_LIBRARIES}
       ${OPENGL_LIBRARIES}
       ${X11_LIBRARIES}
-      ${GTK3_LIBRARIES}
+      ${GTK_LIBRARIES}
     )
 
   endif()

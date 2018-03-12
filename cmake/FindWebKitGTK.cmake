@@ -1,0 +1,15 @@
+message (STATUS "Checking for WebKitGTK...")
+
+find_path(WEBKITGTK_INCLUDE_DIRS webkit2/webkit2.h PATH_SUFFIXES webkitgtk-4.0)
+find_library(WEBKITGTK_LIBRARIES NAMES webkit2gtk-4.0)
+
+if(WEBKITGTK_LIBRARIES)
+  mark_as_advanced(WEBKITGTK_LIBRARIES WEBKITGTK_INCLUDE_DIRS)
+  set(WEBKITGTK_FOUND true)
+  message (STATUS "Found: WebKitGTK")
+  message(STATUS " - Includes: ${WEBKITGTK_INCLUDE_DIRS}")
+  message(STATUS " - Libraries: ${WEBKITGTK_LIBRARIES}")
+else()
+  set(WEBKITGTK_FOUND false)
+  message (FATAL_ERROR "NOT Found: WebKitGTK")
+endif()

@@ -23,7 +23,9 @@ function( addJUCE target_ )
     find_package( Freetype REQUIRED )
     find_package( X11 REQUIRED )
     find_package( OpenGL REQUIRED )
-    find_package( GTK REQUIRED )
+    find_package( GTK3 REQUIRED)
+    find_package( WebKitGTK REQUIRED)
+    find_package( LibSoup REQUIRED)
   endif()
 
   target_compile_definitions( ${CURRENT_TARGET} PRIVATE
@@ -140,7 +142,9 @@ function( addJUCE target_ )
 
     target_include_directories(${CURRENT_TARGET} PRIVATE
       ${FREETYPE_INCLUDE_DIRS}
-      ${GTK_INCLUDE_DIRS}
+      ${GTK3_INCLUDE_DIRS}
+      ${WEBKITGTK_INCLUDE_DIRS}
+      ${LIBSOUP_INCLUDE_DIRS}
     )
 
     target_link_libraries(${CURRENT_TARGET} PRIVATE
@@ -148,11 +152,12 @@ function( addJUCE target_ )
       ${FREETYPE_LIBRARIES}
       ${OPENGL_LIBRARIES}
       ${X11_LIBRARIES}
-      ${GTK_LIBRARIES}
+      ${GTK3_LIBRARIES}
+      ${WEBKIT_LIBRARIES}
+      ${LIBSOUP_LIBRARIES}
     )
 
   endif()
-
 
 endfunction(addJUCE)
 

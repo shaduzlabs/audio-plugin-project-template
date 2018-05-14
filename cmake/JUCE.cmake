@@ -301,6 +301,85 @@ endfunction(addJUCE_AU)
 
 # --------------------------------------------------------------------------------------------------
 
+function( addJUCE_AAX name_ sources_ )
+
+  get_filename_component(AAX_SDK_DIR
+  "${SUBMODULES_DIR}/AAX_SDK_2p3p0/" ABSOLUTE)
+  set(AAX_SDK_INCLUDE_DIR
+    ${AAX_SDK_DIR}/Interfaces
+    ${AAX_SDK_DIR}/Interfaces/ACF
+    )
+  set(AAX_SDK_LIB_DIR ${AAX_SDK_DIR}/Libs)
+  set(AAX_SDK_LIB_DIR_RELEASE ${AAX_SDK_LIB_DIR}/Release)
+  set(AAX_SDK_LIB_DIR_DEBUG ${AAX_SDK_LIB_DIR}/Debug)
+  if(WIN32)
+    if(${CMAKE_CL_64})
+      set(AAX_SDK_LIB_RELEASE "AAXLibrary_x64.lib")
+      set(AAX_SDK_LIB_DEBUG "AAXLibrary_x64_D.lib")
+    else()
+      set(AAX_SDK_LIB_RELEASE "AAXLibrary.lib")
+      set(AAX_SDK_LIB_DEBUG "AAXLibrary_D.lib")
+    endif(${CMAKE_CL_64})
+  else()
+    set(AAX_SDK_LIB_RELEASE "libAAXLibrary_libcpp.a")
+    set(AAX_SDK_LIB_DEBUG "libAAXLibrary_libcpp.a")
+  endif()
+
+  set( CURRENT_TARGET "${name_}AAX" )
+
+  add_library( ${CURRENT_TARGET} MODULE ${sources_} )
+  addJUCE( ${CURRENT_TARGET} )
+
+  target_compile_definitions( ${CURRENT_TARGET} PRIVATE
+    JucePlugin_Build_AAX=1
+    JucePlugin_AAXLibs_path="${AAX_SDK_LIB_DIR}")
+
+  set(AAX_TARGET_OUTPUT_DIR "${PROJECT_BINARY_DIR}/${name_}.aaxplugin/")
+  
+  if(APPLE)    
+    configure_file (
+      "${PROJECT_ROOT_DIR}/support/osx/Info-AAX.plist.in"
+      "${PROJECT_BINARY_DIR}/plists/Info-AAX.plist"
+      )
+    configure_file(
+      "${PROJECT_ROOT_DIR}/support/osx/PkgInfo-AAX"
+      "${AAX_TARGET_OUTPUT_DIR}/Contents/PkgInfo"
+       COPYONLY)
+    target_sources(${CURRENT_TARGET} PRIVATE ${juce_library_audio_plugin_client_vst_osx})
+  elseif (WIN32)
+    set_target_properties(${CURRENT_TARGET} PROPERTIES SUFFIX ".aaxdll")
+  endif()
+
+  source_group( "JUCE\\audio\\aax" FILES ${juce_library_audio_plugin_client_aax} )
+
+  target_include_directories( ${CURRENT_TARGET} PUBLIC ${AAX_SDK_INCLUDE_DIR} )
+  target_sources(${CURRENT_TARGET} PRIVATE ${juce_library_audio_plugin_client_aax})
+
+  message("aax: " "${AAX_SDK_LIB_DIR_RELEASE}/${AAX_SDK_LIB_RELEASE}")
+  target_link_libraries(${CURRENT_TARGET} PUBLIC
+    optimized "${AAX_SDK_LIB_DIR_RELEASE}/${AAX_SDK_LIB_RELEASE}"
+    debug "${AAX_SDK_LIB_DIR_DEBUG}/${AAX_SDK_LIB_DEBUG}"
+    )
+  
+  set_target_properties(${CURRENT_TARGET} PROPERTIES
+    BUNDLE true
+    OUTPUT_NAME ${name_}
+    BUNDLE_EXTENSION "aaxplugin"
+    XCODE_ATTRIBUTE_WRAPPER_EXTENSION "aaxplugin"    
+    XCODE_ATTRIBUTE_MACH_O_TYPE mh_bundle
+    XCODE_ATTRIBUTE_GENERATE_PKGINFO_FILE "YES"
+    XCODE_ATTRIBUTE_INFOPLIST_PREPROCESS "YES"
+    MACOSX_BUNDLE_INFO_PLIST "${PROJECT_BINARY_DIR}/plists/Info-AAX.plist"
+  )
+
+  if(APPLE)
+    install( TARGETS ${CURRENT_TARGET} DESTINATION "$ENV{HOME}/Library/Audio/Plug-Ins/Digidesign" )
+  endif()
+  
+endfunction( addJUCE_AAX )
+
+# --------------------------------------------------------------------------------------------------
+
 function( addJUCEPlugins name_ sources_ )
 
   if( APPLE )
@@ -309,5 +388,6 @@ function( addJUCEPlugins name_ sources_ )
 
   addJUCE_VST( ${name_} "${sources_}" )
   addJUCE_VST3( ${name_} "${sources_}" )
-
+  addJUCE_AAX( ${name_} "${sources_}" )
+  
 endfunction( addJUCEPlugins )

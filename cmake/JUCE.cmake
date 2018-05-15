@@ -14,6 +14,25 @@ endif()
 
 # --------------------------------------------------------------------------------------------------
 
+function(replace_compile_flags old_flag new_flag)
+  foreach (flag_var
+           CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE 
+	   CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+           CMAKE_C_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_MINSIZEREL
+	   CMAKE_C_FLAGS_RELWITHDEBINFO CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+    string(REGEX REPLACE ${old_flag} ${new_flag} tmp_new_flag_var "${${flag_var}}")      
+    set(${flag_var} ${tmp_new_flag_var} CACHE INTERNAL "" FORCE)
+  endforeach()
+endfunction()
+
+function(msvc_set_mt)
+  if (MSVC)
+    replace_compile_flags("/MD" "/MT")      
+  endif(MSVC)
+endfunction(msvc_set_mt)
+
+# --------------------------------------------------------------------------------------------------
+
 function( addJUCE target_ )
 
   if(APPLE)
@@ -137,7 +156,7 @@ function( addJUCE target_ )
       winmm.lib
       ws2_32.lib
     )
-
+    msvc_set_mt()
   elseif(LINUX)
 
     target_include_directories(${CURRENT_TARGET} PRIVATE
@@ -245,9 +264,15 @@ function( addJUCE_VST3 name_ sources_ )
   endif()
 
   set( PLUGIN_OUTPUT_NAME ${name_} )
-  if( WIN32 OR LINUX )
+  if( WIN32)
+    if (${CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
+      ADD_DEFINITIONS(-D_WINSOCKAPI_)
+    endif(${CMAKE_BUILD_TYPE} STREQUAL "DEBUG")
+    set_target_properties(${CURRENT_TARGET} PROPERTIES SUFFIX ".vst3")
+  endif( WIN32)
+  if ( LINUX )
     set( PLUGIN_OUTPUT_NAME ${name_}-vst3 )
-  endif()
+  endif( LINUX)
 
   set_target_properties(${CURRENT_TARGET} PROPERTIES
     BUNDLE true
@@ -312,6 +337,7 @@ function( addJUCE_AAX name_ sources_ )
   set(AAX_SDK_LIB_DIR ${AAX_SDK_DIR}/Libs)
   set(AAX_SDK_LIB_DIR_RELEASE ${AAX_SDK_LIB_DIR}/Release)
   set(AAX_SDK_LIB_DIR_DEBUG ${AAX_SDK_LIB_DIR}/Debug)
+
   if(WIN32)
     if(${CMAKE_CL_64})
       set(AAX_SDK_LIB_RELEASE "AAXLibrary_x64.lib")
@@ -355,7 +381,6 @@ function( addJUCE_AAX name_ sources_ )
   target_include_directories( ${CURRENT_TARGET} PUBLIC ${AAX_SDK_INCLUDE_DIR} )
   target_sources(${CURRENT_TARGET} PRIVATE ${juce_library_audio_plugin_client_aax})
 
-  message("aax: " "${AAX_SDK_LIB_DIR_RELEASE}/${AAX_SDK_LIB_RELEASE}")
   target_link_libraries(${CURRENT_TARGET} PUBLIC
     optimized "${AAX_SDK_LIB_DIR_RELEASE}/${AAX_SDK_LIB_RELEASE}"
     debug "${AAX_SDK_LIB_DIR_DEBUG}/${AAX_SDK_LIB_DEBUG}"

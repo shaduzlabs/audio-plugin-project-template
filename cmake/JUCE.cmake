@@ -406,13 +406,13 @@ endfunction( addJUCE_AAX )
 # --------------------------------------------------------------------------------------------------
 
 function( addJUCEPlugins name_ sources_ )
-
+  add_custom_target("${name_}_plugins")
   if( APPLE )
     addJUCE_AU( ${name_} "${sources_}" )
+    add_dependencies("${name_}_plugins" "${name_}AU")
   endif( APPLE )
-
   addJUCE_VST( ${name_} "${sources_}" )
   addJUCE_VST3( ${name_} "${sources_}" )
   addJUCE_AAX( ${name_} "${sources_}" )
-  
+  add_dependencies("${name_}_plugins" "${name_}VST" "${name_}VST3" "${name_}AAX")
 endfunction( addJUCEPlugins )
